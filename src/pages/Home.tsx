@@ -2,12 +2,8 @@ import { Card } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
 import { Users, Crown, Zap, LogOut, Wallet } from "lucide-react";
-
-interface HomePageProps {
-  username: string;
-  onRoomSelect: (roomId: string) => void;
-  onLogout: () => void;
-}
+import { useState } from "react";
+import { useNavigate } from "react-router";
 
 interface Room {
   id: string;
@@ -76,11 +72,10 @@ const rooms: Room[] = [
   },
 ];
 
-export default function HomePage({
-  username,
-  onRoomSelect,
-  onLogout,
-}: HomePageProps) {
+export default function HomePage() {
+  const navigate = useNavigate();
+  const [, setSelectedRoom] = useState("");
+
   const getRoomIcon = (type: string) => {
     switch (type) {
       case "vip":
@@ -103,6 +98,11 @@ export default function HomePage({
     }
   };
 
+  const handleSelectRoom = (roomId: string) => {
+    setSelectedRoom(roomId);
+    navigate("/bet");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Header */}
@@ -114,7 +114,7 @@ export default function HomePage({
             </div>
             <div>
               <h1 className="text-white">DiceRoll Casino</h1>
-              <p className="text-purple-300">Welcome, {username}</p>
+              <p className="text-purple-300">Welcome, Hong Ming</p>
             </div>
           </div>
 
@@ -124,7 +124,7 @@ export default function HomePage({
               <span className="text-white">$10,000.00</span>
             </div>
             <Button
-              onClick={onLogout}
+              //   onClick={onLogout}
               className="bg-red-600 hover:bg-red-700 text-white border-0"
             >
               <LogOut className="w-4 h-4 mr-2" />
@@ -163,7 +163,7 @@ export default function HomePage({
             <Card
               key={room.id}
               className="bg-white/5 backdrop-blur-lg border border-white/10 hover:border-white/30 transition-all duration-300 overflow-hidden group cursor-pointer"
-              onClick={() => onRoomSelect(room.id)}
+              onClick={() => handleSelectRoom(room.id)}
             >
               {/* Room Header with Gradient */}
               <div

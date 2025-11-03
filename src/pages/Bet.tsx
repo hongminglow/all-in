@@ -7,12 +7,7 @@ import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import { Badge } from "~/components/ui/badge";
 import { Input } from "~/components/ui/input";
-
-interface BettingPageProps {
-  username: string;
-  roomId: string;
-  onBack: () => void;
-}
+import { useNavigate } from "react-router";
 
 interface Bet {
   type: string;
@@ -30,11 +25,8 @@ interface GameResult {
 
 type GamePhase = "betting" | "rolling" | "result";
 
-export default function BettingPage({
-  username,
-  roomId,
-  onBack,
-}: BettingPageProps) {
+export default function BettingPage() {
+  const navigate = useNavigate();
   const [balance, setBalance] = useState(10000);
   const [dice, setDice] = useState<[number, number, number]>([1, 2, 3]);
   const [gamePhase, setGamePhase] = useState<GamePhase>("betting");
@@ -43,22 +35,9 @@ export default function BettingPage({
   const [betAmount, setBetAmount] = useState(10);
   const [history, setHistory] = useState<GameResult[]>([]);
 
-  useEffect(() => {
-    if (gamePhase === "betting" && timeLeft > 0) {
-      const timer = setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 1) {
-            handleAutoRoll();
-            return 0;
-          }
-
-          return prev - 1;
-        });
-      }, 1000);
-
-      return () => clearInterval(timer);
-    }
-  }, [gamePhase, timeLeft]);
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   const handleAutoRoll = () => {
     if (bets.length === 0) {
@@ -255,22 +234,39 @@ export default function BettingPage({
     return "text-red-400";
   };
 
+  useEffect(() => {
+    if (gamePhase === "betting" && timeLeft > 0) {
+      const timer = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            handleAutoRoll();
+            return 0;
+          }
+
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [gamePhase, timeLeft]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <header className="bg-black/30 backdrop-blur-lg border-b border-white/10">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
           <div className="flex items-center gap-4">
             <Button
-              onClick={onBack}
               className="border-0 bg-slate-700 text-white hover:bg-slate-600"
+              onClick={handleBack}
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
             </Button>
             <div>
               <h2 className="text-white">Triple Dice Challenge</h2>
-              <p className="text-purple-300">Room: {roomId}</p>
-              <p className="text-purple-300">Player: {username}</p>
+              <p className="text-purple-300">Room: 123</p>
+              <p className="text-purple-300">Player: Hong Ming</p>
             </div>
           </div>
 

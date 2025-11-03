@@ -2,19 +2,18 @@ import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Dices } from "lucide-react";
+import { useNavigate } from "react-router";
 
-interface LoginPageProps {
-  onLogin: (username: string) => void;
-}
-
-export default function LoginPage({ onLogin }: LoginPageProps) {
+export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (username.trim()) {
-      onLogin(username);
+      console.log("username", username);
+      navigate("/home");
     }
   };
 
