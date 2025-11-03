@@ -103,6 +103,10 @@ export default function HomePage() {
     navigate("/bet");
   };
 
+  const handleLogout = () => {
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Header */}
@@ -124,7 +128,7 @@ export default function HomePage() {
               <span className="text-white">$10,000.00</span>
             </div>
             <Button
-              //   onClick={onLogout}
+              onClick={handleLogout}
               className="bg-red-600 hover:bg-red-700 text-white border-0"
             >
               <LogOut className="w-4 h-4 mr-2" />
