@@ -1,9 +1,11 @@
+import Cookies from "js-cookie";
 import { Card } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
 import { Users, Crown, Zap, LogOut, Wallet } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { ROUTES } from "~/constant/route";
 
 interface Room {
   id: string;
@@ -72,7 +74,7 @@ const rooms: Room[] = [
   },
 ];
 
-export default function HomePage() {
+export const HomePage = () => {
   const navigate = useNavigate();
   const [, setSelectedRoom] = useState("");
 
@@ -104,7 +106,8 @@ export default function HomePage() {
   };
 
   const handleLogout = () => {
-    navigate("/");
+    Cookies.remove("token");
+    navigate(ROUTES.LOGIN);
   };
 
   return (
@@ -228,4 +231,4 @@ export default function HomePage() {
       </main>
     </div>
   );
-}
+};

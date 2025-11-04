@@ -25,7 +25,7 @@ interface GameResult {
 
 type GamePhase = "betting" | "rolling" | "result";
 
-export default function BettingPage() {
+export const BetPage = () => {
   const navigate = useNavigate();
   const [balance, setBalance] = useState(10000);
   const [dice, setDice] = useState<[number, number, number]>([1, 2, 3]);
@@ -614,4 +614,4 @@ export default function BettingPage() {
       </div>
     </div>
   );
-}
+};

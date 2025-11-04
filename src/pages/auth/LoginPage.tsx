@@ -1,24 +1,28 @@
-import { useState } from "react";
 import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
 import { Dices } from "lucide-react";
-import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
+import { createLoginSchema, type TLoginSchema } from "~/features/schema/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuth } from "~/features/hooks/useAuth";
+import { TextInput } from "~/components/base/TextInput";
+import { PasswordInput } from "~/components/base/PasswordInput";
 
-export default function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+export const LoginPage = () => {
+  const { authenticateUser } = useAuth();
+  const form = useForm<TLoginSchema>({
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+    resolver: zodResolver(createLoginSchema),
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (username.trim()) {
-      console.log("username", username);
-      navigate("/home");
-    }
+  const onFormSubmit = (data: TLoginSchema) => {
+    authenticateUser(data);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-purple-900 via-indigo-900 to-blue-900 flex items-center justify-center p-4">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
@@ -38,17 +42,19 @@ export default function LoginPage() {
 
         {/* Login Form */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border border-white/20">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form
+            onSubmit={form.handleSubmit(onFormSubmit)}
+            className="space-y-6"
+          >
             <div>
               <label htmlFor="username" className="block text-purple-100 mb-2">
                 Username
               </label>
-              <Input
-                id="username"
+              <TextInput
+                name="username"
+                control={form.control}
                 type="text"
                 placeholder="Enter your username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
                 className="bg-white/10 border-white/20 text-white placeholder:text-purple-300"
                 required
               />
@@ -58,14 +64,11 @@ export default function LoginPage() {
               <label htmlFor="password" className="block text-purple-100 mb-2">
                 Password
               </label>
-              <Input
-                id="password"
-                type="password"
+              <PasswordInput
+                name="password"
+                control={form.control}
                 placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 className="bg-white/10 border-white/20 text-white placeholder:text-purple-300"
-                required
               />
             </div>
 
@@ -106,4 +109,4 @@ export default function LoginPage() {
       </div>
     </div>
   );
-}
+};
