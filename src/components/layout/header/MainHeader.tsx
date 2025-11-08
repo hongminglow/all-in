@@ -1,24 +1,17 @@
 import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
 import { Button } from "~/components/ui/button";
-import { LogOut, Wallet } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { ROUTES } from "~/constant/route";
 import { useNavigate } from "react-router";
-import { formatCurrency } from "../../utils/format";
-import { useUserStore } from "../../store/useUserStore";
-import { useShallow } from "zustand/react/shallow";
+import { useUserStore } from "~/store/useUserStore";
+import { BalanceButton } from "~/components/base/button/BalanceButton";
 
-export const Header = () => {
+export const MainHeader = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const resetStore = useUserStore((store) => store.actions.reset);
-
-  const { user, balance } = useUserStore(
-    useShallow((store) => ({
-      user: store.user,
-      balance: store.balance,
-    }))
-  );
+  const user = useUserStore((store) => store.user);
 
   const handleLogout = () => {
     Cookies.remove("token");
@@ -42,10 +35,7 @@ export const Header = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg">
-            <Wallet className="w-5 h-5 text-yellow-400" />
-            <span className="text-white">${formatCurrency(balance)}</span>
-          </div>
+          <BalanceButton />
           {/* <Button
               onClick={navigateTestLab}
               className="bg-amber-600 hover:bg-amber-500 text-white border-0"
