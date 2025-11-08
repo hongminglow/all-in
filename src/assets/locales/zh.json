@@ -2,7 +2,8 @@
   "common": {
     "appName": "孤注一掷",
     "tagline": "下注赢大奖！",
-    "lab": "实验室"
+    "lab": "实验室",
+    "back": "返回"
   },
   "login": {
     "title": "登录游戏",
