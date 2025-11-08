@@ -1,4 +1,14 @@
 import type { BetRoom } from "~/types/bet";
+import { ROLES } from "./auth";
+
+export const BET_ROOM_TYPES = {
+  BEGINNER_LUCK: "beginner-luck",
+  HIGH_ROLLER: "high-roller",
+  LIGHTNING_ROUND: "lightning-round",
+  PRIVATE_LOUNGE: "private-lounge",
+  FORTUNE_HALL: "fortune-hall",
+  SPEED_DICE: "speed-dice",
+} as const;
 
 export const BETTING_ROOMS: Array<BetRoom> = [
   {
@@ -8,7 +18,8 @@ export const BETTING_ROOMS: Array<BetRoom> = [
     maxBet: 100,
     players: 124,
     maxPlayers: 500,
-    type: "player",
+    gameType: BET_ROOM_TYPES.BEGINNER_LUCK,
+    permission: ROLES.REGULAR_PLAYER,
   },
   {
     id: "room-2",
@@ -17,7 +28,8 @@ export const BETTING_ROOMS: Array<BetRoom> = [
     maxBet: 10000,
     players: 45,
     maxPlayers: 100,
-    type: "vvip-player",
+    gameType: BET_ROOM_TYPES.HIGH_ROLLER,
+    permission: ROLES.VVIP_PLAYER,
   },
   {
     id: "room-3",
@@ -26,7 +38,8 @@ export const BETTING_ROOMS: Array<BetRoom> = [
     maxBet: 500,
     players: 289,
     maxPlayers: 1000,
-    type: "vip-player",
+    gameType: BET_ROOM_TYPES.LIGHTNING_ROUND,
+    permission: ROLES.VIP_PLAYER,
   },
   {
     id: "room-4",
@@ -35,7 +48,8 @@ export const BETTING_ROOMS: Array<BetRoom> = [
     maxBet: 50000,
     players: 12,
     maxPlayers: 50,
-    type: "vvip-player",
+    gameType: BET_ROOM_TYPES.PRIVATE_LOUNGE,
+    permission: ROLES.VVIP_PLAYER,
   },
   {
     id: "room-5",
@@ -44,7 +58,8 @@ export const BETTING_ROOMS: Array<BetRoom> = [
     maxBet: 250,
     players: 567,
     maxPlayers: 1000,
-    type: "player",
+    gameType: BET_ROOM_TYPES.FORTUNE_HALL,
+    permission: ROLES.REGULAR_PLAYER,
   },
   {
     id: "room-6",
@@ -53,6 +68,7 @@ export const BETTING_ROOMS: Array<BetRoom> = [
     maxBet: 1000,
     players: 198,
     maxPlayers: 500,
-    type: "player",
+    gameType: BET_ROOM_TYPES.SPEED_DICE,
+    permission: ROLES.REGULAR_PLAYER,
   },
 ];
