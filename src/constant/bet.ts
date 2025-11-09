@@ -10,6 +10,15 @@ export const BET_ROOM_TYPES = {
   SPEED_DICE: "speed-dice",
 } as const;
 
+export const BET_OPTIONS = {
+  SMALL: "small",
+  BIG: "big",
+  ODD: "odd",
+  EVEN: "even",
+  SINGLE: "single",
+  TRIPLE: "triple",
+} as const;
+
 export const BETTING_ROOMS: Array<BetRoom> = [
   {
     id: "798",
@@ -72,3 +81,35 @@ export const BETTING_ROOMS: Array<BetRoom> = [
     permission: ROLES.REGULAR_PLAYER,
   },
 ];
+
+export const GAME_ROUND_STATUS = {
+  OPEN: "open",
+  CLOSED: "closed",
+};
+
+export const GAME_PHASE = {
+  IDLE: "idle",
+  START: "start",
+  ROLLING: "rolling",
+  PENDING_RESULT: "pending-result",
+  SETTLED: "settled",
+} as const;
+
+export const GAME_PREFIX_QUICK_BET = [10, 25, 50, 100] as const;
+
+export const GAME_REDUCER_ACTIONS = {
+  UPDATE_GAME_PHASE: "update-game-phase",
+  UPDATE_GAME_ROUND_STATUS: "update-game-round-status",
+  SETTLE_RESULT: "settle-result",
+  RESET: "reset",
+} as const;
+
+export const BET_REDUCER_ACTIONS = {
+  CHANGE_BET_AMOUNT: "change-bet-amount",
+  INCREMENT_BET_AMOUNT: "increment-bet-amount",
+  DECREMENT_BET_AMOUNT: "decrement-bet-amount",
+  APPEND_STAKE: "append-stake",
+  REMOVE_STAKE: "remove-stake",
+  CLEAR_STAKE: "clear-stake",
+  RESET: "reset",
+} as const;
