@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { motion } from "motion/react";
 
 import { Card } from "~/components/ui/card";
@@ -7,19 +6,19 @@ import { GAME_PHASE } from "~/constant/bet";
 
 export const DiceRoller = () => {
   const { state } = useGameContext();
-  const [dice, setDice] = useState<[number, number, number]>([0, 0, 0]);
+  const diceResult = state.result;
 
   return (
     <Card className="border-white/20 bg-indigo-900/50 p-8 backdrop-blur-lg">
       <div className="mb-6 text-center">
         <h1 className="text-white text-5xl font-bold">
-          {dice[0] + dice[1] + dice[2]}
+          {diceResult[0] + diceResult[1] + diceResult[2]}
         </h1>
         <h3 className="mb-2 text-white">Dice Results</h3>
       </div>
 
       <div className="mb-8 flex items-center justify-center gap-6">
-        {dice.map((value, index) => (
+        {diceResult.map((value, index) => (
           <motion.div
             key={index}
             animate={
