@@ -9,6 +9,7 @@ import { BetProvider, useBetContext } from "~/features/bet/context/BetContext";
 import { CurrentAccumulatedBets } from "~/features/bet/components/CurrentAccumulatedBets";
 import { BetRoundSimulator } from "~/features/bet/components/BetRoundSimulator";
 import { BET_RESULT } from "~/constant/bet";
+import { BetTypeLabel } from "../features/bet/components/BetTypeLabel";
 
 export const BetPage = () => {
   return (
@@ -66,7 +67,7 @@ const BetPageContent = () => {
                   className="rounded-lg border border-white/10 bg-white/5 p-4"
                 >
                   <div className="flex items-center justify-between text-white">
-                    <span>Round {history.length - index}</span>
+                    <span>Stake {history.length - index}</span>
                     <span
                       className={
                         game.winLoss === BET_RESULT.WIN
@@ -77,12 +78,20 @@ const BetPageContent = () => {
                       {game.winLoss === BET_RESULT.WIN ? "+" : ""}${game.payout}
                     </span>
                   </div>
+
+                  <BetTypeLabel type={game.type} target={game.target} />
+
                   <div className="mt-2 flex items-center justify-between text-sm text-purple-200">
-                    <span>Dice: {game.dice.join("-")}</span>
-                    <span>Total: {game.result}</span>
+                    <span>Dice: {game.dice.join(" - ")}</span>
+                    <p>
+                      Result: &nbsp;
+                      <span className="font-bold text-base/4">
+                        {game.result}
+                      </span>
+                    </p>
                   </div>
                   <div className="mt-2 text-xs text-purple-300">
-                    {new Date(game.createdDate).toLocaleTimeString()}
+                    {new Date(game.createdDate).toLocaleString()}
                   </div>
                 </div>
               ))
