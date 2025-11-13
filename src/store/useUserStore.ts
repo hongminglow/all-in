@@ -28,6 +28,10 @@ export const useUserStore = create<
     }),
     {
       name: "user-store",
+      partialize: (state) => ({
+        user: state.user,
+        balance: state.balance,
+      }),
     }
   )
 );
