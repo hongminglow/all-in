@@ -11,6 +11,7 @@ import {
   GAME_ROUND_STATUS,
 } from "~/constant/bet";
 import type { TGamePhase } from "~/types/bet";
+import { formatDuration } from "~/utils/timer";
 
 const getGamePhaseLabel = (phase: TGamePhase) => {
   switch (phase) {
@@ -30,13 +31,9 @@ export const CountDownBanner = () => {
   const [timeLeft, setTimeLeft] = useState(GAME_ROUND_CONFIG.countdown);
 
   useEffect(() => {
-    if (state.gamePhase === GAME_PHASE.IDLE) {
-      dispatch({
-        type: GAME_REDUCER_ACTIONS.UPDATE_GAME_PHASE,
-        payload: { gamePhase: GAME_PHASE.START },
-      });
-    }
-  }, []);
+    if (state.gamePhase !== GAME_PHASE.START) return;
+    setTimeLeft(GAME_ROUND_CONFIG.countdown);
+  }, [state.gamePhase]);
 
   useEffect(() => {
     if (state.gamePhase === GAME_PHASE.START && timeLeft > 0) {
@@ -77,7 +74,7 @@ export const CountDownBanner = () => {
                 "text-red-400": timeLeft <= 10,
               })}
             >
-              {timeLeft}s
+              {formatDuration(timeLeft)}
             </div>
             <div className="text-purple-300">
               {getGamePhaseLabel(state.gamePhase)}
