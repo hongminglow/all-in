@@ -74,7 +74,7 @@ export const BetRoundSimulator = () => {
         type: GAME_REDUCER_ACTIONS.UPDATE_GAME_PHASE,
         payload: { gamePhase: GAME_PHASE.PENDING_RESULT },
       });
-    }, 1500);
+    }, 5000);
 
     return () => window.clearTimeout(timer);
   }, [gameDispatch, gameState.gamePhase]);

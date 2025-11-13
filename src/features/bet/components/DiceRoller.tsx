@@ -1,17 +1,18 @@
-import { motion } from "motion/react";
+import Lottie from "lottie-react";
 
 import { Card } from "~/components/ui/card";
 import { useGameContext } from "~/features/bet/context/GameContext";
 import { GAME_PHASE } from "~/constant/bet";
+import diceAnimation from "~/assets/lottie/dice.json";
 
 const pipCoordinates = [
-  { cx: 25, cy: 25 }, // top-left
-  { cx: 25, cy: 50 }, // mid-left
-  { cx: 25, cy: 75 }, // bottom-left
-  { cx: 50, cy: 50 }, // center
-  { cx: 75, cy: 25 }, // top-right
-  { cx: 75, cy: 50 }, // mid-right
-  { cx: 75, cy: 75 }, // bottom-right
+  { cx: 25, cy: 25 },
+  { cx: 25, cy: 50 },
+  { cx: 25, cy: 75 },
+  { cx: 50, cy: 50 },
+  { cx: 75, cy: 25 },
+  { cx: 75, cy: 50 },
+  { cx: 75, cy: 75 },
 ];
 
 const pipLayout: Record<number, number[]> = {
@@ -23,42 +24,25 @@ const pipLayout: Record<number, number[]> = {
   6: [0, 1, 2, 4, 5, 6],
 };
 
-type DiceFaceProps = {
-  value: number;
-  isRolling: boolean;
-};
-
-const DiceFace = ({ value, isRolling }: DiceFaceProps) => {
+const DiceFace = ({ value }: { value: number }) => {
   const variant = pipLayout[value] ?? pipLayout[1];
-
   return (
-    <motion.svg
+    <svg
       viewBox="0 0 100 100"
-      className="h-24 w-24 rounded-2xl shadow-2xl"
-      animate={
-        isRolling
-          ? {
-              rotate: [0, 90, 180, 270, 360],
-            }
-          : { rotate: 0 }
-      }
-      transition={{
-        duration: 0.6,
-        ease: "linear",
-        repeat: isRolling ? Infinity : 0,
-      }}
+      className="h-28 w-28 drop-shadow-[0_12px_16px_rgba(253,72,67,0.35)]"
     >
       <rect
-        x={5}
-        y={5}
-        width={90}
-        height={90}
-        rx={16}
-        ry={16}
-        fill="#f9fafb"
-        stroke="#1f2937"
-        strokeWidth={5}
+        x={6}
+        y={6}
+        width={88}
+        height={88}
+        rx={18}
+        ry={18}
+        fill="#FD4843"
+        stroke="#b91c1c"
+        strokeWidth={4}
       />
+
       {variant.map((idx) => {
         const { cx, cy } = pipCoordinates[idx];
         return (
@@ -66,14 +50,26 @@ const DiceFace = ({ value, isRolling }: DiceFaceProps) => {
             key={`${value}-${idx}`}
             cx={cx}
             cy={cy}
-            r={8}
-            fill="#111827"
+            r={9}
+            fill="#ffffff"
           />
         );
       })}
-    </motion.svg>
+    </svg>
   );
 };
+
+const RollingDice = () => (
+  <Lottie
+    animationData={diceAnimation}
+    loop
+    autoplay
+    className="h-28 w-28"
+    rendererSettings={{
+      preserveAspectRatio: "xMidYMid slice",
+    }}
+  />
+);
 
 export const DiceRoller = () => {
   const { state } = useGameContext();
@@ -93,7 +89,12 @@ export const DiceRoller = () => {
 
       <div className="mb-8 flex items-center justify-center gap-6">
         {diceResult.map((value, index) => (
-          <DiceFace key={`dice-${index}`} value={value} isRolling={isRolling} />
+          <div
+            key={`dice-${index}`}
+            className="flex h-28 w-28 items-center justify-center"
+          >
+            {isRolling ? <RollingDice /> : <DiceFace value={value} />}
+          </div>
         ))}
       </div>
     </Card>
