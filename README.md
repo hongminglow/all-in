@@ -74,6 +74,13 @@ npm run dev
 
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
+### Test Account
+
+To clone and try the application, use the following mocked credentials:
+
+- **Username**: `admin`
+- **Password**: `password`
+
 ---
 
 ## 📁 Project Structure
